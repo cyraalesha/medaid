@@ -1,34 +1,215 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <title>Medaid</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
 
-  <div class="header">
-    <img src="medaid.png" class="logo">
-    <h1 class="heading">Medaid</h1>
+<head>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+
+<body>
+  <div class="container" id="container">
+    <div class="form-container sign-up-container">
+      <form action="#">
+        <h1>Create an Account</h1>
+        <input type="text" id="full_name" placeholder="Full name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="New Password">
+        <button onclick="register()">Sign Up</button>
+      </form>
+    </div>
+    <div class="form-container sign-in-container">
+      <form action="#">
+        <h1>Sign in</h1>
+
+        <input type="text" id="full_name" placeholder="Full name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <a href="#">Forgot your password?</a>
+        <button onclick="login()">Sign In</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Have an account?</h1>
+          <p>Login to your account and reduce the chance of Adverse Drug Reactions Now</p>
+          <button class="ghost" id="signIn" href="home.html">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Don't have an account?</h1>
+          <p>Enter your details and get started!</p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
   </div>
+</body>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 
-  <div class="features">
-    <a href="checkmedicine.html"><img src="img/medicine.svg"  class="featureimg"></a>
-    <a href="hotline.html"><img src="img/hotline.svg"  class="featureimg"></a>
-  </div>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+
+<script>
+
+  const signUpButton = document.getElementById('signUp');
+  const signInButton = document.getElementById('signIn');
+  const container = document.getElementById('container');
+
+  signUpButton.addEventListener('click', () => {
+    container.classList.add("right-panel-active");
+  });
+
+  signInButton.addEventListener('click', () => {
+    container.classList.remove("right-panel-active");
+  });
+
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAvZWU9ZtBCGacmgaFqb6A4UFWeuh4NPuw",
+    authDomain: "medscan-d8f87.firebaseapp.com",
+    projectId: "medscan-d8f87",
+    storageBucket: "medscan-d8f87.appspot.com",
+    messagingSenderId: "832819961478",
+    appId: "1:832819961478:web:36e4870bbe0df71087fb07"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  // Initialize variables
+  const auth = firebase.auth()
+  const database = firebase.database()
+
+
+  function register() {
+    // Get all our input fields
+    email = document.getElementById('email').value
+    password = document.getElementById('password').value
+    full_name = document.getElementById('full_name').value
+
+    // Validate input fields
+    if (validate_email(email) == false || validate_password(password) == false) {
+      alert('Email or Password is invalid!!')
+      return
+      // Don't continue running the code
+    }
+
+
+    // Move on with Auth
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(function () {
+        // Declare user variable
+        var user = auth.currentUser
+
+        // Add this user to Firebase Database
+        var database_ref = database.ref()
+
+        // Create User data
+        var user_data = {
+          email: email,
+          full_name: full_name,
+          last_login: Date.now()
+        }
+
+        // Push to Firebase Database
+        database_ref.child('users/' + user.uid).set(user_data)
+
+        // DOne
+        alert('User Created!!')
+        window.location.replace("/home.html");
+
+      })
+      .catch(function (error) {
+        // Firebase will use this to alert of its errors
+        var error_code = error.code
+        var error_message = error.message
+
+        alert(error_message)
+      })
+  }
+
+  // Set up our login function
+  function login() {
+    // Get all our input fields
+    email = document.getElementById('email').value
+    password = document.getElementById('password').value
+
+    // Validate input fields
+    if (validate_email(email) == false || validate_password(password) == false) {
+      alert('Email or Password is invalid!!')
+      return
+      // Don't continue running the code
+    }
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(function () {
+        // Declare user variable
+        var user = auth.currentUser
+
+        // Add this user to Firebase Database
+        var database_ref = database.ref()
+
+        // Create User data
+        var user_data = {
+          last_login: Date.now()
+        }
+
+        // Push to Firebase Database
+        database_ref.child('users/' + user.uid).update(user_data)
+
+        // DOne
+        alert('User Logged In!!')
+        window.location.replace("/home.html");
+
+
+      })
+      .catch(function (error) {
+        // Firebase will use this to alert of its errors
+        var error_code = error.code
+        var error_message = error.message
+
+        alert(error_message)
+      })
+  }
 
 
 
 
-    
-    <script src="script.js"></script>
-  </body>
+  // Validate Functions
+  function validate_email(email) {
+    expression = /^[^@]+@\w+(\.\w+)+\w$/
+    if (expression.test(email) == true) {
+      // Email is good
+      return true
+    } else {
+      // Email is not good
+      return false
+    }
+  }
+
+  function validate_password(password) {
+    // Firebase only accepts lengths greater than 6
+    if (password < 6) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  function validate_field(field) {
+    if (field == null) {
+      return false
+    }
+
+    if (field.length <= 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+</script>
+
 </html>
