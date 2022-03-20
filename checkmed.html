@@ -58,7 +58,7 @@
             for (let i = 0; i < maxPredictions; i++) { // and class labels
                 labelContainer.appendChild(document.createElement("div"));
             }
-            getElementById("startbutton").style.display = 'none';
+    
         }
 
         async function loop() {
@@ -77,16 +77,17 @@
                 labelContainer.childNodes[i].innerHTML = classPrediction;
 
                 if (prediction[1].probability.toFixed(2) > 0.97) {
-                    //it should open a page based on which variable reached the threshold aa
-                    webcam.stop();
+                    
+                
                     document.getElementById("result").innerHTML = "Nalgestan";
                      document.getElementById("next").style.display = "block";
+                     webcam.stop();
+        
                     if (prediction[2].probability.toFixed(2) > 0.97) {
-                        //it should open a page based on which variable reached the threshold aa
-                        webcam.stop();
+                        
                         document.getElementById("result").innerHTML = "Woods Peppermint";
                          document.getElementById("next").style.display = "block";
-
+                         webcam.stop();
                     }
                 }
             }
