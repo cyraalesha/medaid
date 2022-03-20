@@ -79,13 +79,13 @@
                 if (prediction[1].probability.toFixed(2) > 0.97) {
                     
                 
-                    document.getElementById("result").innerHTML = "Nalgestan";
+                    document.getElementById("scanresult").innerHTML = "Nalgestan";
                      document.getElementById("next").style.display = "block";
                      webcam.stop();
         
                     if (prediction[2].probability.toFixed(2) > 0.97) {
                         
-                        document.getElementById("result").innerHTML = "Woods Peppermint";
+                        document.getElementById("scanresult").innerHTML = "Woods Peppermint";
                          document.getElementById("next").style.display = "block";
                          webcam.stop();
                     }
