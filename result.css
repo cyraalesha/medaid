@@ -13,7 +13,7 @@ body {
 }
 
 .resultbox {
-  background-color: brown;
+  background-color: #ddfc61;
   width: 46px;
   height: 46px;
   display: flex;
