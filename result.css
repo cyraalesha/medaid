@@ -1,0 +1,43 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 50vw;
+}
+
+.resultbox {
+  background-color: brown;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resultbuttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.resultbuttons a {
+  background-color: #3a95ff;
+  text-decoration: none;
+  color: white;
+  width: 198px;
+  height: 41px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

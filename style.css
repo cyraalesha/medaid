@@ -1,0 +1,50 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+p {
+  font-weight: 500;
+  font-size: 20px;
+}
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 48.82px;
+  height: 50px;
+}
+.heading {
+  text-align: center;
+  font-family: "Comfortaa", cursive;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  margin-left: -20px;
+  margin-top: 30px;
+}
+
+.featureimg {
+  width: 115%;
+}
+
+.button3 {
+  border-radius: 50%;
+  background-color: #3a95ff;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.schedule {
+  font-size: 20px;
+  text-align: center;
+}
