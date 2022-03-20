@@ -75,15 +75,15 @@
             labelContainer.childNodes[i].innerHTML = classPrediction;
 
              if (prediction[1].probability.toFixed(2) > 0.97) {
-              //it should open a page based on which variable reached the threshold aa
               
               document.getElementById("scanresult").innerHTML = "Nalgestan";
+              document.getElementById("description").innerHTML = "This is a Nasal Decongestan. Not reccomended for anyone with liver and kidney problems. May cause sleepiness";
               document.getElementById("next").style.display = "block";
               webcam.stop();
               if (prediction[2].probability.toFixed(2) > 0.97) {
-                 //it should open a page based on which variable reached the threshold aa
          
                  document.getElementById("scanresult").innerHTML = "Woods Peppermint";
+                 document.getElementById("description").innerHTML = "For nonproductive cough. Adverse reaction might include: vomiting, dizziness, drowsiness, and constipation";
                   document.getElementById("next").style.display = "block";
                           webcam.stop();
             
